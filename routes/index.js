@@ -1,12 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
-var async = require('async');
+var async = require('async'),
+    redis = require('redis');
 
 var Jailor = require('../models/jailor'),
     Prisoner = require('../models/prisoner'),
     Items = require('../models/items'),
     Crimes = require('../models/crime');
+
+var client = redis.createClient();
+
+client.on('error', (err) => {
+   console.log(err);
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -42,35 +49,50 @@ router.post('/login', function (req, res) {
 });
 
 router.get('/home', (req, res) => {
-    Prisoner.getAll((err, prisoners) => {
-        async.map(prisoners, Items.getItemOfPrisoner, (err, results) => {
-           for (var i = 0; i < results.length; i++) {
-               prisoners[i].items = results[i];
+
+
+        client.hgetall('prisoners', (err, object) => {
+            console.log(err, object);
+           if (err || !object || object.length == 0) {
+               Prisoner.getAll((err, prisoners) => {
+
+                   async.map(prisoners, Items.getItemOfPrisoner, (err, results) => {
+                       for (var i = 0; i < results.length; i++) {
+                           prisoners[i].items = results[i];
+                       }
+
+                       async.map(prisoners, Crimes.getPrisonersOfCrime, (err, results) => {
+                           for (var i = 0; i < results.length; i++) {
+                               prisoners[i].crimes = results[i];
+                           }
+
+
+                           client.hmset('prisoners', prisoners);
+
+                           if (err) {
+                               console.log(err);
+                               res.render("error", {
+                                   message: err
+                               });
+                           } else {
+                               res.render("home", {
+                                   prisoners: prisoners
+                               });
+                           }
+                       });
+
+
+                   });
+
+               });
+           } else {
+               res.render("home", {
+                   prisoners: object
+               });
            }
-
-            async.map(prisoners, Crimes.getPrisonersOfCrime, (err, results) => {
-                for (var i = 0; i < results.length; i++) {
-                    prisoners[i].crimes = results[i];
-                }
-
-                if (err) {
-                    console.log(err);
-                    res.render("error", {
-                        message: err
-                    });
-                } else {
-                    res.render("home", {
-                        prisoners: prisoners,
-                    });
-                }
-            });
-
-
         });
 
 
-
-    })
 });
 
 module.exports = router;
