@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - prison_management_system@localhost" uuid="fca9e32c-f55c-4231-90d0-0fa63d6c7158">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>prison_management_system.*</schema-pattern>
+      <default-schemas>prison_management_system.*</default-schemas>
+    </data-source>
+  </component>
+</project>
