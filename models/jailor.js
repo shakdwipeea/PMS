@@ -11,8 +11,13 @@ var Jailor = {
             conn.query("SELECT * FROM jailor WHERE username = ? AND password = ?",
                 [data.username, data.password], (err, rows) => {
                     conn.release();
-                    console.log(err, rows);
-                    cb(err,rows[0]);
+                    if (rows.length == 0) {
+                        cb("Not A user", rows[0]);
+                    }
+                    else {
+                        cb(err, rows[0]);
+                    }
+
              });
         });
     }

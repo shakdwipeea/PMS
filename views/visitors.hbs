@@ -17,6 +17,24 @@
 </div></div>
 </nav>
 <div class="container">
+
+    <div>
+        <table class="table table-hover">
+            <th>Visitor Name</th>
+            <th>Date Of Visit</th>
+            <th>Duration Of Visit</th>
+            <th>Prisoner's Name</th>
+            {{#each visitors}}
+                <tr>
+                    <td>{{visitor_name}}</td>
+                    <td>{{date_of_visit}}</td>
+                    <td>{{duration}}</td>
+                    <td>{{prisoner_name}}</td>
+                </tr>
+            {{/each}}
+        </table>
+    </div>
+
     <form action="/visitors" method="post">
         <div class="form-group">
             <label for="name">Name of visitor</label>

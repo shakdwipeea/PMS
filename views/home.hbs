@@ -27,31 +27,41 @@
         <li><a href="/prescription">Add Prescription</a></li>
         <li><a href="/visitors">Visitors</a></li>
         <li><a href="/prisoners">Add Prisoners</a></li>
+        <li><a href="http://localhost/phpmyadmin/db_structure.php?server=1&db=prison_management_system&token=807685a9e34dd95464400a9c09a0be4a">Database</a></li>
     </ul>
 </div></div>
 </nav>
 
 <div class="container">
+    <div class="row">
+        <button class="btn btn-primary pull-right"> Print </button>
+    </div>
     {{#each prisoners}}
     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title">
             <h2 class="mdl-card__title-text">{{name}}</h2>
         </div>
         <div class="mdl-card__supporting-text">
-            <div>Block Name -> {{block_name}}</div>
+            <div class="h4">Block Name -> {{block_name}}</div>
             <br>
-            <div>Date Of Joining -> {{date_of_joining}}</div>
+            <div class="h4">Date Of Joining -> {{date_of_joining}}</div>
             <br>
-            <div>Date of Release -> {{date_of_release}}</div>
+            <div class="h4">Date of Release -> {{date_of_release}}</div>
             <br>
-            <div>Possesion</div>
-            {{#each items}}
+            <div class="h4">Possesion</div>
+           <div class="panel"> {{#each items}}
                 <span>{{name}}</span>
-            {{/each}}
+            {{/each}}</div>
+            <br>
+            <div class="h4">Crimes Commited</div>
+            <div class="panel">{{#each crimes}}
+                <div class="panel">{{name}}</div>
+            {{/each}}</div>
+
         </div>
         <div class="mdl-card__actions mdl-card--border">
             <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Get Started
+                Criminal
             </a>
         </div>
     </div>

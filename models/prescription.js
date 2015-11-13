@@ -46,6 +46,19 @@ var Prescription = {
                 cb(err, rows);
             });
         });
+    },
+
+    getAll: (cb) => {
+        pool.getConnection((err, conn) => {
+            if (err) {
+                return cb(err, null);
+            }
+
+            conn.query("SELECT * FROM prescription AS pres INNER JOIN prisoner AS p ON pres.prisoner_id = p.id", (err, rows) => {
+                conn.release();
+                cb(err, rows);
+            });
+        });
     }
 };
 

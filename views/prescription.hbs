@@ -16,6 +16,22 @@
 </ul>
 </div></div>
 </nav>
+
+<div>
+    <table class="table">
+        <th>Date</th>
+        <th>Disease</th>
+        <th>Prisoner</th>
+        {{#each prescriptions}}
+            <tr>
+                <td>{{date}}</td>
+                <td>{{disease_name}}</td>
+                <td>{{name}}</td>
+            </tr>
+        {{/each}}
+    </table>
+</div>
+
 <form action="/prescription" method="post">
     <div class="form-group">
         <label for="disease_name">Name Of Disease</label>

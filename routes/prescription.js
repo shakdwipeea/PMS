@@ -4,21 +4,28 @@
 var express = require('express');
 var router = express.Router();
 
+var async = require('async');
+
 var Prisoner = require('../models/prisoner'),
     Prescription = require('../models/prescription');
 
 router.get('/', (req, res) => {
-    Prisoner.getNames((err, prisoners) => {
+    async.parallel([
+        (callback) => Prescription.getAll(callback),
+        (callback) => Prisoner.getAll(callback)
+    ], (err, results) => {
         if (err) {
             res.render("error",{
                 message: err
             })
         } else {
             res.render("prescription", {
-                prisoners: prisoners
+                prisoners: results[1],
+                prescriptions: results[0]
             });
         }
-    })
+    });
+
 });
 
 router.post('/', (req, res) => {
