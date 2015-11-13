@@ -29,11 +29,12 @@ var Crime = {
                 prisoner_id: prisoner_id
             }, (err, rows) => {
                 conn.release();
+                cb(err, rows);
             });
         });
     },
 
-    getPrisonersOfCrime: (crime_id) => {
+    getPrisonersOfCrime: (crime_id, cb) => {
         pool.getConnection((err, conn) => {
             if (err) {
                 return cb(err, null);
@@ -42,6 +43,19 @@ var Crime = {
             conn.query("SELECT * FROM crime " +
                 "INNER JOIN crime_committed AS cc ON cc.crime_id = crime.id" +
                 "INNER JOIN prisoner AS p ON cc.prisoner_id = p.id", (err, rows) => {
+                conn.release();
+                cb(err, rows);
+            });
+        });
+    },
+
+    getAll: (cb) => {
+        pool.getConnection((err, conn) => {
+            if (err) {
+                return cb(err, null);
+            }
+
+            conn.query("SELECT * FROM crime", (err, rows) => {
                 conn.release();
                 cb(err, rows);
             });

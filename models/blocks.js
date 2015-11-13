@@ -3,27 +3,27 @@
  */
 var pool = require('../lib/pool').pool;
 
-var Visitors = {
-    newVisitor: (visitor, cb) => {
+var Block = {
+    add: (block, cb) => {
         pool.getConnection((err, conn) => {
             if (err) {
                 return cb(err, null);
             }
 
-            conn.query("INSERT INTO visitors SET ?", visitor, (err, rows) => {
+            conn.query("INSERT INTO block SET ?", block, (err, rows) => {
                 conn.release();
                 cb(err, rows);
             });
         });
     },
 
-    getVisitorsOfPrisoner: (prisoner_id, cb) => {
+    getAll: (cb) => {
         pool.getConnection((err, conn) => {
             if (err) {
                 return cb(err, null);
             }
 
-            conn.query("SELECT * FROM visitors WHERE visitors.prisoner_id = ?", prisoner_id, (err, rows) => {
+            conn.query("SELECT * FROM block", (err, rows) => {
                 conn.release();
                 cb(err, rows);
             });
@@ -31,4 +31,4 @@ var Visitors = {
     }
 };
 
-module.exports = Visitors;
+module.exports = Block;

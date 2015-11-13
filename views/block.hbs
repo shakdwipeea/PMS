@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>PMS</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">  <div class="navbar-header"> <div> <ul class="nav navbar-nav">
+    <li ><a href="/home">Home</a></li>
+    <li><a href="/crime">Add A crime</a></li>
+    <li><a href="/items">Add Items</a></li>
+    <li><a href="/officers">Add Officers</a></li>
+    <li class="active"><a href="/block">Block Supervision</a></li>
+    <li><a href="/prescription">Add Prescription</a></li>
+    <li><a href="/visitors">Visitors</a></li>
+    <li><a href="/prisoners">Add Prisoners</a></li>
+</ul>
+</div></div>
+</nav>
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <th>Name of officer</th>
+            <th>Block </th>
+            {{#each officers}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{block}}</td>
+                </tr>
+            {{/each}}
+        </table>
+    </div>
+    <div class="row">
+        <div class="panel">Add Block</div>
+        <form action="/block" method="post">
+            <div class="form-group">
+                <label for="block">Name Of new block</label>
+                <input type="text" class="form-control" placeholder="name of block" id="block" name="name"/>
+            </div>
+            <button class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -38,7 +38,9 @@ CREATE TABLE jailor (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(255),
   date_of_employment VARCHAR(255),
-  date_of_retirement VARCHAR(255)
+  date_of_retirement VARCHAR(255),
+  username VARCHAR(255),
+  password VARCHAR(255)
 );
 
 CREATE TABLE items (

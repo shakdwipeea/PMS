@@ -1,0 +1,71 @@
+<html>
+<head>
+    <title>PMS</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">  <div class="navbar-header"> <div> <ul class="nav navbar-nav">
+    <li><a href="/home">Home</a></li>
+    <li class="active"><a href="/crime">Add A crime</a></li>
+    <li><a href="/items">Add Items</a></li>
+    <li><a href="/officers">Add Officers</a></li>
+    <li><a href="/block">Block Supervision</a></li>
+    <li><a href="/prescription">Add Prescription</a></li>
+    <li><a href="/visitors">Visitors</a></li>
+    <li><a href="/prisoners">Add Prisoners</a></li>
+</ul>
+</div></div>
+</nav>
+
+<div class="container">
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="panel">
+                <h1>New Type Of Crime</h1>
+                <form action="/crime" method="post">
+                    <div class="form-group">
+                        <label for="name">Name of Crime</label>
+                        <input id="name" type="text" class="form-control" name="name" placeholder="Name of crime"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="severity">Severity of Crime</label>
+                        <input type="number" id="severity" class="form-control" name="severity" placeholder="Severity of crime"/>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="panel">
+                <h1>New Crime commited</h1>
+
+                <form action="/crime/committed" method="post">
+                    <div class="form-group">
+                        <label for="crime">Select Crime</label>
+                        <select id="crime" name="crime_id" class="form-control">
+                            <option disabled>No Crime yet</option>
+                            {{#each crimes}}
+                                <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="prisoner">Select Prisoner</label>
+                        <select class="form-control" name="prisoner_id" id="prisoner">
+                            <option disabled>No Prisoner</option>
+                            {{#each prisoners}}
+                                <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

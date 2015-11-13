@@ -5,7 +5,7 @@ var pool = require('../lib/pool').pool;
 var mysql = require('mysql');
 
 var Items = {
-    add: (item) => {
+    add: (item, cb) => {
         pool.getConnection((err, conn) => {
             if (err) {
                 return cb(err, null);
@@ -18,7 +18,8 @@ var Items = {
         });
     },
 
-    getItemOfPrisoner: (prisoner_id) => {
+    getItemOfPrisoner: (prisoner, cb) => {
+        var prisoner_id = prisoner.id;
         pool.getConnection((err, conn) => {
             if (err) {
                 return cb(err, null);
@@ -26,7 +27,7 @@ var Items = {
 
             conn.query("SELECT * FROM items WHERE items.prisoner_id = ?", prisoner_id, (err, rows) => {
                 conn.release();
-                cb(err, prisoner_id);
+                cb(err, rows);
             });
         });
     }

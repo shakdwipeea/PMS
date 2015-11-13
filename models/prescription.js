@@ -14,7 +14,6 @@ var Prescription = {
             async.waterfall([
                 (callback) => {
                     conn.query("INSERT INTO prescription SET ?", prescription, (err, rows) => {
-                        conn.release();
                         callback(err, rows);
                     });
                 },
@@ -23,11 +22,11 @@ var Prescription = {
                         prescription_id: rows.insertId,
                         prisoner_id: prescription.prisoner_id
                     }, (err, rows) => {
-                        conn.release();
                         callback(err, rows);
                     });
                 }
             ], (err, results) => {
+                conn.release();
                 cb(err, results);
             });
 

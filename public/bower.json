@@ -1,0 +1,23 @@
+{
+  "name": "public",
+  "authors": [
+    "Akash Shakdwipeea <ashakdwipeea@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "material-design-lite": "~1.0.6"
+  }
+}

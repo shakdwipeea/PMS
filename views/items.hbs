@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>PMS</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">  <div class="navbar-header"> <div> <ul class="nav navbar-nav">
+    <li ><a href="/home">Home</a></li>
+    <li><a href="/crime">Add A crime</a></li>
+    <li class="active"><a href="/items">Add Items</a></li>
+    <li><a href="/officers">Add Officers</a></li>
+    <li><a href="/block">Block Supervision</a></li>
+    <li><a href="/prescription">Add Prescription</a></li>
+    <li><a href="/visitors">Visitors</a></li>
+    <li><a href="/prisoners">Add Prisoners</a></li>
+</ul>
+</div></div>
+</nav>
+    <div class="container">
+        <form action="/items" method="post">
+            <div class="form-group">
+                <label for="name">name of Item collected</label>
+                <input class="form-control" id="name" type="text" name="name" placeholder="Name of Item"/>
+            </div>
+
+            <div class="form-group">
+                <label for="Select Prisoner whod did this"></label>
+                <select class="form-control" name="prisoner_id" id="prisoner">
+                    <option disabled>No prisoner</option>
+                    {{#each prisoners}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <button class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

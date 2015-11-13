@@ -1,0 +1,62 @@
+<html>
+<head>
+    <title>PMS</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/bower_components/material-design-lite/material.min.css">
+    <script src="/bower_components/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Wide card with share menu button -->
+    <style>
+        .demo-card-wide.mdl-card {
+            padding-top: 52px;
+            width: 100%;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">  <div class="navbar-header"> <div> <ul class="nav navbar-nav">
+        <li class="active"><a href="/home">Home</a></li>
+        <li><a href="/crime">Add A crime</a></li>
+        <li><a href="/items">Add Items</a></li>
+        <li><a href="/officers">Add Officers</a></li>
+        <li><a href="/block">Block Supervision</a></li>
+        <li><a href="/prescription">Add Prescription</a></li>
+        <li><a href="/visitors">Visitors</a></li>
+        <li><a href="/prisoners">Add Prisoners</a></li>
+    </ul>
+</div></div>
+</nav>
+
+<div class="container">
+    {{#each prisoners}}
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">{{name}}</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div>Block Name -> {{block_name}}</div>
+            <br>
+            <div>Date Of Joining -> {{date_of_joining}}</div>
+            <br>
+            <div>Date of Release -> {{date_of_release}}</div>
+            <br>
+            <div>Possesion</div>
+            {{#each items}}
+                <span>{{name}}</span>
+            {{/each}}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Get Started
+            </a>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+</body>
+</html>

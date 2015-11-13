@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>PMS</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">  <div class="navbar-header"> <div> <ul class="nav navbar-nav">
+    <li ><a href="/home">Home</a></li>
+    <li><a href="/crime">Add A crime</a></li>
+    <li><a href="/items">Add Items</a></li>
+    <li><a href="/officers">Add Officers</a></li>
+    <li><a href="/block">Block Supervision</a></li>
+    <li><a href="/prescription">Add Prescription</a></li>
+    <li ><a href="/visitors">Visitors</a></li>
+    <li class="active"><a href="/prisoners">Add Prisoners</a></li>
+</ul>
+</div></div>
+</nav>
+<form action="/prisoners" method="post">
+    <div class="form-group">
+        <label for="name">Name Of Prisoner</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="name"/>
+    </div>
+
+    <div class="form-group">
+        <label for="date_of_joining">Date Of Joining</label>
+        <input type="text" class="form-control" name="date_of_joining" id="date_of_joining" placeholder="date of joining"/>
+    </div>
+
+    <div class="form-group">
+        <label for="date_of_release">Date Of release</label>
+        <input type="text" class="form-control" name="date_of_release" id="date_of_release" placeholder="date of release"/>
+    </div>
+
+    <div class="form-group">
+        <label for="block_id">Select Block</label>
+        <select name="block_id" id="block_id" class="form-control">
+            <option disabled>Select Block</option>
+            {{#each blocks}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <button class="btn btn-default">Submit</button>
+
+</form>
+</body>
+</html>

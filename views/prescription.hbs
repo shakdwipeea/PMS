@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>PMS</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">  <div class="navbar-header"> <div> <ul class="nav navbar-nav">
+    <li ><a href="/home">Home</a></li>
+    <li><a href="/crime">Add A crime</a></li>
+    <li><a href="/items">Add Items</a></li>
+    <li><a href="/officers">Add Officers</a></li>
+    <li><a href="/block">Block Supervision</a></li>
+    <li class="active"><a href="/prescription">Add Prescription</a></li>
+    <li><a href="/visitors">Visitors</a></li>
+    <li><a href="/prisoners">Add Prisoners</a></li>
+</ul>
+</div></div>
+</nav>
+<form action="/prescription" method="post">
+    <div class="form-group">
+        <label for="disease_name">Name Of Disease</label>
+        <input name="disease_name" class="form-control" type="text" placeholder="Disease name" id="disease_name"/>
+    </div>
+
+    <div class="form-group">
+        <label for="date">Date of Prescription</label>
+        <input type="text" name="date" class="form-control" placeholder="Date" id="date" name="date"/>
+    </div>
+
+    <div class="form-group">
+        <label for="prisoner">Prisoner</label>
+        <select name="prisoner_id" id="prisoner" class="form-control">
+            <option disabled>No Prisoner</option>
+            {{#each prisoners}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <button class="btn btn-default">Submit</button>
+</form>
+</body>
+</html>
