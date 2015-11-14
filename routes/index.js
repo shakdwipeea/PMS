@@ -50,10 +50,10 @@ router.post('/login', function (req, res) {
 
 router.get('/home', (req, res) => {
 
-
+/*
         client.hgetall('prisoners', (err, object) => {
             console.log(err, object);
-           if (err || !object || object.length == 0) {
+           if (err || !object || object.length == 0) {*/
                Prisoner.getAll((err, prisoners) => {
 
                    async.map(prisoners, Items.getItemOfPrisoner, (err, results) => {
@@ -71,11 +71,18 @@ router.get('/home', (req, res) => {
 
                            if (err) {
                                console.log(err);
-                               res.render("error", {
+                               /*res.render("error", {
+                                   message: err
+                               });*/
+
+                               res.json({
                                    message: err
                                });
                            } else {
-                               res.render("home", {
+                               /*res.render("home", {
+                                   prisoners: prisoners
+                               });*/
+                               res.json({
                                    prisoners: prisoners
                                });
                            }
@@ -85,13 +92,15 @@ router.get('/home', (req, res) => {
                    });
 
                });
-           } else {
-               res.render("home", {
+          /* } else {
+               /!*res.render("home", {
                    prisoners: object
-               });
-           }
-        });
-
+               });*!/
+               res.json({
+                   prisoners: object
+               })
+          }
+        });*/
 
 });
 
