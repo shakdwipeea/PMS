@@ -1,5 +1,5 @@
 > ## Install nodejs 
-> ## install mysql
+> ## install [mysql](https://www.apachefriends.org/download.html)
 > ## create database prison_management_system
 > ## execute db/create.sql
 ```
