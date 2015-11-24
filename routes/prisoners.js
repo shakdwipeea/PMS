@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
                 message: err
             });
         } else {
-            res.render("home");
+            res.redirect("home");
         }
     });
 });

@@ -9,11 +9,11 @@ var Jailor = require('../models/jailor'),
     Items = require('../models/items'),
     Crimes = require('../models/crime');
 
-var client = redis.createClient();
-
+//var client = redis.createClient();
+/*
 client.on('error', (err) => {
    console.log(err);
-});
+});*/
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -40,9 +40,10 @@ router.post('/login', function (req, res) {
         }
         else {
             //res.json(results);
-            res.render('home', {
+            /*res.render('home', {
                 prisoners: results[1]
-            });
+            });*/
+            res.redirect('home');
         }
     });
 
@@ -67,24 +68,24 @@ router.get('/home', (req, res) => {
                            }
 
 
-                           client.hmset('prisoners', prisoners);
+                           //client.hmset('prisoners', prisoners);
 
                            if (err) {
                                console.log(err);
-                               /*res.render("error", {
+                               res.render("error", {
                                    message: err
-                               });*/
+                               });
 
-                               res.json({
+                               /*res.json({
                                    message: err
-                               });
+                               });*/
                            } else {
-                               /*res.render("home", {
+                               res.render("home", {
+                                   prisoners: prisoners
+                               });
+                               /*res.json({
                                    prisoners: prisoners
                                });*/
-                               res.json({
-                                   prisoners: prisoners
-                               });
                            }
                        });
 
@@ -103,5 +104,66 @@ router.get('/home', (req, res) => {
         });*/
 
 });
+
+router.post('/search', (req, res) => {
+    var crime = req.body.search;
+    console.log(crime);
+    Prisoner.getAll((err, prisoners) => {
+
+    async.map(prisoners, Items.getItemOfPrisoner, (err, results) => {
+        for (var i = 0; i < results.length; i++) {
+            prisoners[i].items = results[i];
+        }
+
+        async.map(prisoners, Crimes.getPrisonersOfCrime, (err, results) => {
+            for (var i = 0; i < results.length; i++) {
+                prisoners[i].crimes = results[i];
+            }
+            
+            for (var i = 0; i < prisoners.length; i++) {
+                console.log(prisoners[i].crimes);
+                var k = [];
+                for(var j = 0; j <= prisoners[i].crimes.length; j++) {
+                    if (prisoners[i].crimes[j]) {
+                        console.log('s');
+                        k.push(prisoners[i].crimes[j].name);
+                    }
+                }
+                
+                if(k.indexOf(crime) == -1) {
+                    console.log("Now deleting", k);
+                    delete prisoners[i];
+                } 
+            }
+            
+            console.log(prisoners);
+            prisoners = prisoners.filter(p => p != true);
+
+            //client.hmset('prisoners', prisoners);
+
+            if (err) {
+                console.log(err);
+                res.render("error", {
+                    message: err
+                });
+
+                /*res.json({
+                    message: err
+                });*/
+            } else {
+                res.render("home", {
+                    prisoners: prisoners
+                });
+                /*res.json({
+                    prisoners: prisoners
+                });*/
+            }
+        });
+
+
+    });
+
+});
+})
 
 module.exports = router;

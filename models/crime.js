@@ -23,14 +23,24 @@ var Crime = {
             if (err) {
                 return cb(err, null);
             }
-
-            conn.query("INSERT INTO crime_committed SET ?", {
-                crime_id: crime_id,
-                prisoner_id: prisoner_id
-            }, (err, rows) => {
-                conn.release();
-                cb(err, rows);
+            
+            conn.query("SELECT * FROM crime_committed WHERE crime_id = ? AND prisoner_id = ?", [
+                crime_id, prisoner_id
+            ], (err, rows) => {
+                if(rows.length == 0) {
+                    conn.query("INSERT INTO crime_committed SET ?", {
+                        crime_id: crime_id,
+                        prisoner_id: prisoner_id
+                    }, (err, rows) => {
+                        conn.release();
+                        cb(err, rows);
+                    });
+                } else {
+                    cb(err, rows);
+                }
             });
+
+            
         });
     },
 
@@ -43,7 +53,25 @@ var Crime = {
 
             conn.query("SELECT crime.name AS name, crime.severity AS severity FROM crime " +
                 "INNER JOIN crime_committed AS cc ON cc.crime_id = crime.id " +
-                "INNER JOIN prisoner AS p ON cc.prisoner_id = p.id", (err, rows) => {
+                "INNER JOIN prisoner AS p ON cc.prisoner_id = p.id WHERE p.id = ?", prisoner_id,
+                 (err, rows) => {
+                conn.release();
+                cb(err, rows);
+            });
+        });
+    },
+    
+     getPrisonersOfCrimeName: (crimeName, cb) => {
+         //todo
+        pool.getConnection((err, conn) => {
+            if (err) {
+                return cb(err, null);
+            }
+
+            conn.query("SELECT crime.name AS name, crime.severity AS severity FROM crime " +
+                "INNER JOIN crime_committed AS cc ON cc.crime_id = crime.id " +
+                "INNER JOIN prisoner AS p ON cc.prisoner_id = p.id WHERE crime.name = ?", crimeName,
+                 (err, rows) => {
                 conn.release();
                 cb(err, rows);
             });
